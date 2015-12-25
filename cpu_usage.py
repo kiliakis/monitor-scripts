@@ -1,6 +1,15 @@
 #!/usr/bin/python2
 from subprocess import check_output
 import time
+import sys
+
+if len(sys.argv) > 1:
+    try:
+        interval = float(sys.argv[1])
+    except ValueError:
+        interval = 1
+
+#print (interval)
 
 out = check_output(['cat','/proc/stat'])
 out = out.splitlines()[0]
@@ -9,8 +18,8 @@ puser,pnice,psystem,pidle,piowait, \
         pirq,psoftirq,psteal,pguest,pguest_nice \
         = [float(x) for x in out.split(' ')[2::]]
 
-for i in range(100):
-    time.sleep(1)
+while True:
+    time.sleep(interval)
     out = check_output(['cat','/proc/stat'])
     out = out.splitlines()[0]
     user, nice, system, idle, iowait, \
