@@ -3,6 +3,8 @@ from subprocess import check_output
 import time
 import sys
 
+interval = 1
+
 if len(sys.argv) > 1:
     try:
         interval = float(sys.argv[1])
