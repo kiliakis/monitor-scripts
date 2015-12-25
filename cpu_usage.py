@@ -1,21 +1,30 @@
 #!/usr/bin/python2
 from subprocess import check_output
 import time
-import sys
+#import sys
+import argparse
 
-interval = 1
 
+parser = argparse.ArgumentParser(description='Monitor CPU Usage')
+parser.add_argument('-i','--interval',type=float, default=1)
+parser.add_argument('-o','--output',type=str, default='')
+args = parser.parse_args()
+interval = args.interval
+output = args.output
+
+'''
 if len(sys.argv) > 1:
     try:
         interval = float(sys.argv[1])
     except ValueError:
         interval = 1
+'''
 
 #print (interval)
 
 out = check_output(['cat','/proc/stat'])
 out = out.splitlines()[0]
-print (out.split(' ')[2::])
+#print (out.split(' ')[2::])
 puser,pnice,psystem,pidle,piowait, \
         pirq,psoftirq,psteal,pguest,pguest_nice \
         = [float(x) for x in out.split(' ')[2::]]
