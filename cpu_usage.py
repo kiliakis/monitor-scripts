@@ -3,7 +3,14 @@ from subprocess import check_output
 import time
 import sys
 import argparse
+import signal
 
+def handler(signum, frame):
+    #print('Signal handler called with signal', signum)
+    #raise OSError("Couldn't open device!")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT,handler)
 
 parser = argparse.ArgumentParser(description='Monitor CPU Usage')
 parser.add_argument('-i','--interval',type=float, default=1,
@@ -42,6 +49,8 @@ puser,pnice,psystem,pidle,piowait, \
         pirq,psoftirq,psteal,pguest,pguest_nice \
         = [float(x) for x in out.split(' ')[2::]]
 
+
+
 for i in range(1000):
     time.sleep(interval)
     out = check_output(command)
@@ -75,6 +84,7 @@ for i in range(1000):
     except ZeroDivisionError as e:
         continue
 
-    out_file.write('CPU Usage is %.2f percent\n' % cpu_usage)
+    #out_file.write('CPU Usage is %.2f percent\n' % cpu_usage)
+    out_file.write('%.2f\n' % cpu_usage)
 
 
