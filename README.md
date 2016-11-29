@@ -11,3 +11,6 @@ Scripts that monitor variable performance counters composed in python
     2. -o/--output OUTPUT: OUTPUT is the file in which the measurements will be printed. Default output is stdout.
 
 * Usage: Just run `python2 cpu_usage.py`
+
+2. perf_deluxe.py
+> Wrapper of perf tool
